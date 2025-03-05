@@ -1,20 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Untitled</title>
-  
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoFlix</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Se cambió la referencia a Font Awesome para usar una copia local.
+         Asegúrate de descargar el archivo y colocarlo en la carpeta "css" -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <style>
         :root {
             --primary: #e50914;
@@ -458,6 +450,21 @@
         <input type="file" accept="video/*" class="hidden-upload" id="video-upload" multiple>
     </div>
     
+    <!-- Registro del Service Worker para funcionalidad offline -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Error al registrar el Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+    
     <script>
         // Referencias a elementos DOM
         const videoPlayer = document.getElementById('video-player');
@@ -740,20 +747,8 @@
             }
         });
         
-        // Simular funcionalidad offline con service worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Aquí se registraría un service worker real para aplicación offline
-                console.log('La aplicación está lista para uso offline');
-            });
-        }
-        
         // Cargar videos al iniciar
         window.addEventListener('DOMContentLoaded', loadVideosFromStorage);
     </script>
-</body>
-</html>
-<!-- partial -->
-  
 </body>
 </html>
