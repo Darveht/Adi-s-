@@ -2234,11 +2234,14 @@ document.getElementById('note-content').addEventListener('input', function() {
     <!-- Search Results -->
     <h2 id="search-results-title" class="text-xl font-bold mb-4 text-black">Search Results</h2>
     <div class="flex justify-around border-b border-gray-200 mb-4">
-      <button data-tab="books" class="tab-button py-2 w-1/2 text-center font-medium text-gray-500 hover:text-[#FE2C55] active">
+      <button data-tab="books" class="tab-button py-2 w-1/3 text-center font-medium text-gray-500 hover:text-[#FE2C55] active">
         Stories
       </button>
-      <button data-tab="authors" class="tab-button py-2 w-1/2 text-center font-medium text-gray-500 hover:text-[#FE2C55]">
+      <button data-tab="authors" class="tab-button py-2 w-1/3 text-center font-medium text-gray-500 hover:text-[#FE2C55]">
         Authors
+      </button>
+      <button data-tab="notes" class="tab-button py-2 w-1/3 text-center font-medium text-gray-500 hover:text-[#FE2C55]">
+        Notes
       </button>
     </div>
 
@@ -2256,6 +2259,14 @@ document.getElementById('note-content').addEventListener('input', function() {
       <h3 id="search-authors-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Authors</h3>
       <div id="search-authors-list" class="space-y-3">
         <!-- Authors will be loaded from Firebase here -->
+      </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div id="notes-section" class="hidden">
+      <h3 id="search-notes-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Notes</h3>
+      <div id="search-notes-list" class="space-y-3">
+        <!-- Notes will be loaded from Firebase here -->
       </div>
     </div>
   </div>
@@ -2279,16 +2290,21 @@ document.getElementById('note-content').addEventListener('input', function() {
       
       // Mostrar la sección correspondiente
       const tabName = button.getAttribute('data-tab');
+      // Ocultar todas las secciones
+      document.getElementById('books-section').classList.add('hidden');
+      document.getElementById('authors-section').classList.add('hidden');
+      document.getElementById('notes-section').classList.add('hidden');
+      
+      // Mostrar la sección seleccionada
       if (tabName === 'books') {
         document.getElementById('books-section').classList.remove('hidden');
         document.getElementById('books-section').classList.add('block');
-        document.getElementById('authors-section').classList.add('hidden');
-        document.getElementById('authors-section').classList.remove('block');
-      } else {
+      } else if (tabName === 'authors') {
         document.getElementById('authors-section').classList.remove('hidden');
         document.getElementById('authors-section').classList.add('block');
-        document.getElementById('books-section').classList.add('hidden');
-        document.getElementById('books-section').classList.remove('block');
+      } else if (tabName === 'notes') {
+        document.getElementById('notes-section').classList.remove('hidden');
+        document.getElementById('notes-section').classList.add('block');
       }
     });
   });
@@ -2549,11 +2565,27 @@ document.getElementById('note-content').addEventListener('input', function() {
         BeaBoo Studio
       </button>
 
-      <!-- Historias del usuario -->
+      <!-- Tabs de navegación móvil -->
       <hr class="border-t border-gray-300 w-full my-4">
-      <div class="mt-6 w-full">
+      <div class="flex border-b border-gray-200 mb-4 w-full">
+        <button onclick="switchProfileTab('stories')" class="flex-1 py-2 text-center text-[#FE2C55] border-b-2 border-[#FE2C55] font-medium" id="mobile-stories-tab">
+          Historias
+        </button>
+        <button onclick="switchProfileTab('notes')" class="flex-1 py-2 text-center text-gray-500 font-medium" id="mobile-notes-tab">
+          Notas
+        </button>
+      </div>
+
+      <!-- Historias del usuario -->
+      <div id="mobile-stories-content" class="mt-6 w-full">
         <h3 id="profile-stories-title" class="text-lg font-bold mb-2 text-[#FE2C55]">0 Historias</h3>
         <div id="user-stories" class="grid grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- Notas del usuario (móvil) -->
+      <div id="mobile-notes-content" class="mt-6 w-full hidden">
+        <h3 id="profile-notes-title" class="text-lg font-bold mb-2 text-[#FE2C55]">0 Notas</h3>
+        <div id="user-notes-mobile" class="space-y-4"></div>
       </div>
     </div>
   </div>
@@ -2694,10 +2726,24 @@ document.getElementById('note-content').addEventListener('input', function() {
               <div id="user-stories-desktop" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
 
-            <!-- Otros tabs (ocultos por defecto) -->
+            <!-- Tab de Notas -->
             <div id="notes-tab-content" class="tab-content hidden">
-              <h2 class="text-2xl font-bold mb-6">Notas</h2>
-              <p class="text-gray-600">Tus notas y pensamientos publicados en la comunidad</p>
+              <!-- Header de notas con botón crear -->
+              <div class="flex justify-between items-center mb-6">
+                <div>
+                  <h2 id="profile-notes-header" class="text-2xl font-bold text-gray-900">0 Notas</h2>
+                  <p class="text-gray-600 mt-1">Tus notas y pensamientos publicados en la comunidad</p>
+                </div>
+                <button onclick="openNoteCreation()" class="bg-[#FE2C55] text-white px-6 py-3 rounded-xl hover:bg-red-600 transition-all flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                  </svg>
+                  Nueva nota
+                </button>
+              </div>
+
+              <!-- Grid de notas -->
+              <div id="user-notes-desktop" class="grid grid-cols-1 gap-4"></div>
             </div>
 
             
@@ -6607,6 +6653,8 @@ document.getElementById('category-filter').addEventListener('change', function()
 async function performSearch(query) {
   document.getElementById('search-loading').classList.add('loading-active');
   await new Promise(resolve => setTimeout(resolve, 3000));
+  
+  // Buscar historias
   const storiesSnapshot = await firebase.database().ref('stories').once('value');
   let books = [];
   storiesSnapshot.forEach(child => {
@@ -6615,6 +6663,7 @@ async function performSearch(query) {
   });
   renderBooksCarousel(books);
   
+  // Buscar autores
   const usersSnapshot = await firebase.database().ref('users').once('value');
   let authors = [];
   usersSnapshot.forEach(child => {
@@ -6622,6 +6671,18 @@ async function performSearch(query) {
     if (user.username && user.username.toLowerCase().includes(query)) authors.push(user);
   });
   renderAuthorsList(authors);
+  
+  // Buscar notas
+  const notesSnapshot = await firebase.database().ref('communityNotes').once('value');
+  let notes = [];
+  notesSnapshot.forEach(child => {
+    const note = child.val();
+    if (note.content && note.content.toLowerCase().includes(query)) {
+      notes.push({...note, id: child.key});
+    }
+  });
+  renderNotesList(notes);
+  
   document.getElementById('search-loading').classList.remove('loading-active');
 }
 
@@ -6655,6 +6716,57 @@ async function performSearch(query) {
         `;
       item.addEventListener('click', () => openAuthorProfile(author.uid));
       list.appendChild(item);
+    });
+  }
+
+  function renderNotesList(notes) {
+    const list = document.getElementById('search-notes-list');
+    list.innerHTML = '';
+    
+    if (notes.length === 0) {
+      list.innerHTML = `
+        <div class="text-center py-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          <p class="text-gray-500">No se encontraron notas</p>
+        </div>
+      `;
+      return;
+    }
+    
+    notes.forEach(note => {
+      firebase.database().ref('users/' + note.authorId).once('value').then(authorSnap => {
+        const authorData = authorSnap.val() || {};
+        const item = document.createElement('div');
+        item.className = 'bg-gray-50 p-4 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer';
+        item.innerHTML = `
+          <div class="flex items-start space-x-3 mb-3">
+            <img src="${authorData.profileImage || 'https://via.placeholder.com/50'}" alt="${authorData.username}" class="w-10 h-10 rounded-full object-cover">
+            <div class="flex-1">
+              <div class="font-semibold text-sm">${authorData.username || 'Usuario'}</div>
+              <div class="text-xs text-gray-500">${new Date(note.timestamp).toLocaleDateString()}</div>
+            </div>
+          </div>
+          <p class="text-gray-800 mb-2">${note.content}</p>
+          ${note.imageUrl ? `<img src="${note.imageUrl}" alt="Imagen de la nota" class="w-full rounded-lg mb-2 max-h-40 object-cover">` : ''}
+          <div class="flex items-center space-x-4 text-sm text-gray-500">
+            <span><i class="far fa-heart mr-1"></i>${note.likes || 0}</span>
+            <span><i class="far fa-comment mr-1"></i>${note.commentsCount || 0}</span>
+          </div>
+        `;
+        item.addEventListener('click', () => {
+          // Abrir la comunidad y mostrar la nota
+          openCommunity();
+          setTimeout(() => {
+            const noteElement = document.querySelector(`[data-note-id="${note.id}"]`);
+            if (noteElement) {
+              noteElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 300);
+        });
+        list.appendChild(item);
+      });
     });
   }
   /*********************** PERFIL (Propio) **************************/
@@ -6807,10 +6919,23 @@ async function performSearch(query) {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
-    const notesContainer = document.getElementById('notes-tab-content');
+    // Cargar notas para desktop
+    const notesDesktop = document.getElementById('user-notes-desktop');
+    const notesHeaderDesktop = document.getElementById('profile-notes-header');
+    
+    // Cargar notas para móvil
+    const notesMobile = document.getElementById('user-notes-mobile');
+    const notesTitleMobile = document.getElementById('profile-notes-title');
     
     firebase.database().ref('communityNotes').orderByChild('authorId').equalTo(user.uid).once('value').then(snapshot => {
-      let notesHTML = '<h2 class="text-2xl font-bold mb-6">Mis Notas</h2>';
+      const notesCount = snapshot.numChildren();
+      
+      if (notesHeaderDesktop) {
+        notesHeaderDesktop.textContent = `${notesCount} Notas`;
+      }
+      if (notesTitleMobile) {
+        notesTitleMobile.textContent = `${notesCount} Notas`;
+      }
       
       if (snapshot.exists()) {
         const notes = [];
@@ -6820,26 +6945,99 @@ async function performSearch(query) {
         
         notes.sort((a, b) => b.timestamp - a.timestamp);
         
-        notesHTML += '<div class="grid grid-cols-1 gap-4">';
-        notes.forEach(note => {
-          notesHTML += `
-            <div class="bg-white p-4 rounded-xl border hover:shadow-md transition-shadow">
+        // Renderizar en desktop
+        if (notesDesktop) {
+          notesDesktop.innerHTML = '';
+          notes.forEach(note => {
+            const noteCard = document.createElement('div');
+            noteCard.className = 'bg-white p-6 rounded-xl border hover:shadow-md transition-shadow cursor-pointer';
+            noteCard.innerHTML = `
+              <div class="flex items-start space-x-4">
+                ${note.imageUrl ? `
+                  <img src="${note.imageUrl}" alt="Imagen de la nota" class="w-32 h-32 rounded-lg object-cover flex-shrink-0">
+                ` : ''}
+                <div class="flex-1">
+                  <p class="mb-3 text-gray-800">${note.content}</p>
+                  <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span><i class="far fa-calendar mr-1"></i>${new Date(note.timestamp).toLocaleDateString()}</span>
+                    <div class="flex items-center space-x-4">
+                      <span><i class="far fa-heart mr-1"></i>${note.likes || 0}</span>
+                      <span><i class="far fa-comment mr-1"></i>${note.commentsCount || 0}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            notesDesktop.appendChild(noteCard);
+          });
+        }
+        
+        // Renderizar en móvil
+        if (notesMobile) {
+          notesMobile.innerHTML = '';
+          notes.forEach(note => {
+            const noteCard = document.createElement('div');
+            noteCard.className = 'bg-white p-4 rounded-xl border hover:shadow-md transition-shadow';
+            noteCard.innerHTML = `
               <p class="mb-3">${note.content}</p>
               ${note.imageUrl ? `<img src="${note.imageUrl}" alt="Imagen de la nota" class="w-full rounded-lg mb-3 max-h-48 object-cover">` : ''}
               <div class="flex items-center justify-between text-sm text-gray-500">
-                <span>${new Date(note.timestamp).toLocaleDateString()}</span>
-                <span>❤️ ${note.likes || 0}</span>
+                <span><i class="far fa-calendar mr-1"></i>${new Date(note.timestamp).toLocaleDateString()}</span>
+                <div class="flex items-center space-x-3">
+                  <span><i class="far fa-heart mr-1"></i>${note.likes || 0}</span>
+                  <span><i class="far fa-comment mr-1"></i>${note.commentsCount || 0}</span>
+                </div>
               </div>
-            </div>
-          `;
-        });
-        notesHTML += '</div>';
+            `;
+            notesMobile.appendChild(noteCard);
+          });
+        }
       } else {
-        notesHTML += '<p class="text-gray-600">No has publicado ninguna nota aún. Ve a la comunidad para crear tu primera nota.</p>';
+        // No hay notas
+        const emptyMessage = `
+          <div class="text-center py-12">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            <p class="text-gray-600 mb-4">No has publicado ninguna nota aún</p>
+            <button onclick="openNoteCreation()" class="bg-[#FE2C55] text-white px-6 py-2 rounded-xl hover:bg-red-600 transition-all">
+              Crear primera nota
+            </button>
+          </div>
+        `;
+        if (notesDesktop) notesDesktop.innerHTML = emptyMessage;
+        if (notesMobile) notesMobile.innerHTML = emptyMessage;
       }
-      
-      notesContainer.innerHTML = notesHTML;
     });
+  }
+
+  function switchProfileTab(tabName) {
+    // Para móvil
+    const storiesContent = document.getElementById('mobile-stories-content');
+    const notesContent = document.getElementById('mobile-notes-content');
+    const storiesTab = document.getElementById('mobile-stories-tab');
+    const notesTab = document.getElementById('mobile-notes-tab');
+    
+    if (storiesContent && notesContent && storiesTab && notesTab) {
+      if (tabName === 'stories') {
+        storiesContent.classList.remove('hidden');
+        notesContent.classList.add('hidden');
+        storiesTab.classList.add('text-[#FE2C55]', 'border-b-2', 'border-[#FE2C55]');
+        storiesTab.classList.remove('text-gray-500');
+        notesTab.classList.remove('text-[#FE2C55]', 'border-b-2', 'border-[#FE2C55]');
+        notesTab.classList.add('text-gray-500');
+      } else if (tabName === 'notes') {
+        notesContent.classList.remove('hidden');
+        storiesContent.classList.add('hidden');
+        notesTab.classList.add('text-[#FE2C55]', 'border-b-2', 'border-[#FE2C55]');
+        notesTab.classList.remove('text-gray-500');
+        storiesTab.classList.remove('text-[#FE2C55]', 'border-b-2', 'border-[#FE2C55]');
+        storiesTab.classList.add('text-gray-500');
+        
+        // Cargar notas cuando se cambia al tab
+        loadUserNotes();
+      }
+    }
   }
 
   function closeProfileEdit() {
