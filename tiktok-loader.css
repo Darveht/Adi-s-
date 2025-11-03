@@ -29,12 +29,12 @@
 }
 
 .tiktok-loader:before {
-  background: rgb(237, 28, 36);
+  background: #FE2C55;
   animation-delay: calc(var(--animation-duration) * -0.5);
 }
 
 .tiktok-loader:after {
-  background: rgb(0, 242, 234);
+  background: #FF69B4;
   animation-delay: 0s;
 }
 

@@ -1851,12 +1851,6 @@ setInterval(checkScheduledChapters, 60000);
   <div id="top-navbar" class="flex items-center justify-between px-4 py-3 border-b border-gray-200 sticky top-0 z-50 bg-white">
     <h1 id="app-name" class="text-2xl font-bold text-[#161823]">BeaBoo</h1>
     <div class="flex items-center space-x-4">
-      <button onclick="openSearch()" aria-label="Buscar" class="relative w-6 h-6 text-[#161823] hover:text-[#FE2C55] transition">
-        <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
       <button onclick="openCalendar()" aria-label="Calendario" class="relative w-6 h-6 text-[#161823] hover:text-[#FE2C55] transition">
         <svg class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -2077,12 +2071,19 @@ firebase.auth().onAuthStateChanged(user => {
 
   <!-- BOTTOM NAVIGATION TIKTOK STYLE -->
   <div id="bottom-nav" class="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white transition-transform duration-300">
-    <div class="grid grid-cols-4 gap-2 p-3">
+    <div class="grid grid-cols-5 gap-2 p-3">
       <button onclick="openHome()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
         <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10 2L2 8v10a1 1 0 001 1h5v-5h4v5h5a1 1 0 001-1V8l-8-6z" />
         </svg>
         <span class="text-xs">Home</span>
+      </button>
+      <button onclick="openSearch()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" stroke-linecap="round" stroke-linejoin="round" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="text-xs">Search</span>
       </button>
       <button onclick="openCommunity()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
         <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
