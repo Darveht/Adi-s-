@@ -152,6 +152,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <link rel="stylesheet" href="tiktok-loader.css">
   <style>
     /* ESTILOS BASE ADAPTADOS */
 body {
@@ -326,45 +327,7 @@ body {
   z-index: 10;
 }
 
-/* ANIMACIÓN DE CARGA EN BÚSQUEDA */
-#search-loading {
-  position: relative;
-  width: 50px;
-  height: 50px;
-}
-
-#search-loading .dot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: #FE2C55;
-  border-radius: 50%;
-  animation: dotRotate 4s linear infinite;
-}
-
-#search-loading .dot:nth-child(2) {
-  animation-delay: -2s;
-}
-
-@keyframes dotRotate {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg) translateX(20px) rotate(0deg);
-  }
-  25% {
-    transform: translate(-50%, -50%) rotate(90deg) translateX(20px) rotate(-90deg);
-  }
-  50% {
-    transform: translate(-50%, -50%) rotate(180deg) translateX(20px) rotate(-180deg);
-  }
-  75% {
-    transform: translate(-50%, -50%) rotate(270deg) translateX(20px) rotate(-270deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg) translateX(20px) rotate(-360deg);
-  }
-}
+/* ANIMACIÓN DE CARGA EN BÚSQUEDA - Movida a tiktok-loader.css */
 
 /* ANIMACIÓN PARA BORDE "LIVE" */
 @keyframes pulse {
@@ -2395,7 +2358,8 @@ document.getElementById('note-content').addEventListener('input', function() {
     <!-- Stories Section -->
     <div id="books-section" class="block">
       <h3 id="search-books-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Stories</h3>
-      <div id="search-books-carousel" class="flex space-x-3 overflow-x-auto mb-6 p-1 scrollbar-hide">
+      <div id="search-loading" class="tiktok-loader mx-auto my-4"></div>
+<div id="search-books-carousel" class="flex space-x-3 overflow-x-auto mb-6 p-1 scrollbar-hide">
         <!-- Stories will be loaded from Firebase here -->
       </div>
     </div>
@@ -6814,29 +6778,36 @@ async function likeNote(noteId) {
         books.push(story);
       }
     });
+    
     renderBooksCarousel(books);
-  });
-
-  if (query) {
-    firebase.database().ref('users').once('value').then(snapshot => {
+    
+    // Obtener autores que coincidan con la búsqueda
+    firebase.database().ref('users').once('value').then(userSnapshot => {
       let authors = [];
-      snapshot.forEach(child => {
-        const userData = child.val();
-        if (userData.username && userData.username.toLowerCase().includes(query)) {
-          userData.uid = child.key;
-          authors.push(userData);
+      userSnapshot.forEach(child => {
+        const user = child.val();
+        if (user.username && user.username.toLowerCase().includes(query)) {
+          authors.push(user);
         }
       });
       renderAuthorsList(authors);
+      document.getElementById('search-loading').classList.remove('loading-active'); // Ocultar animación
     });
-  } else {
+  });
+}else {
     document.getElementById('search-authors-list').innerHTML = '';
   }
 }
 
-document.getElementById('search-input').addEventListener('input', performRealTimeSearch);
-document.getElementById('category-filter').addEventListener('change', performRealTimeSearch);
-  async function performSearch(query) {
+document.getElementById('search-input').addEventListener('input', function() {
+  document.getElementById('search-loading').classList.add('loading-active');
+  performRealTimeSearch();
+});
+document.getElementById('category-filter').addEventListener('change', function() {
+  document.getElementById('search-loading').classList.add('loading-active');
+  performRealTimeSearch();
+});  async function performSearch(query) {
+    document.getElementById('search-loading').classList.add('loading-active');
     await new Promise(resolve => setTimeout(resolve, 3000));
     const storiesSnapshot = await firebase.database().ref('stories').once('value');
     let books = [];
@@ -6845,13 +6816,16 @@ document.getElementById('category-filter').addEventListener('change', performRea
       if (story.title && story.title.toLowerCase().includes(query)) books.push(story);
     });
     renderBooksCarousel(books);
+    
     const usersSnapshot = await firebase.database().ref('users').once('value');
     let authors = [];
     usersSnapshot.forEach(child => {
-      const userData = child.val();
-      if (userData.username && userData.username.toLowerCase().includes(query)) {
-        userData.uid = child.key;
-        authors.push(userData);
+      const user = child.val();
+      if (user.username && user.username.toLowerCase().includes(query)) authors.push(user);
+    });
+    renderAuthorsList(authors);
+    document.getElementById('search-loading').classList.remove('loading-active');
+  }h(userData);
       }
     });
     renderAuthorsList(authors);
