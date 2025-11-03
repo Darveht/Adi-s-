@@ -1275,113 +1275,7 @@ setInterval(checkScheduledChapters, 60000);
   </div>
 </div>
 
-<!-- MODAL DE SOPORTE -->
-<div id="support-modal" class="fixed inset-0 z-50 hidden bg-white">
-  <div class="w-full h-full min-h-screen">
-    <div id="support-form-container" class="bg-white h-full min-h-screen p-8">
-      <div class="flex items-center mb-6">
-        <button onclick="closeSupportModal()" class="text-gray-600 hover:text-[#FE2C55] transition-colors mr-4">
-          <i class="fas fa-arrow-left text-2xl"></i>
-        </button>
-        <h1 class="text-3xl font-bold text-[#FE2C55]">Centro de Soporte</h1>
-      </div>
-      
-      <p class="text-gray-600 mb-6">
-        Estamos aquí para ayudarte. Completa el formulario y nos pondremos en contacto contigo pronto.
-      </p>
 
-      <form id="support-form" class="space-y-6">
-        <div>
-          <label for="support-email" class="block text-gray-700 font-semibold mb-2">
-            Correo Electrónico <span class="text-red-500">*</span>
-          </label>
-          <input 
-            id="support-email" 
-            type="email" 
-            placeholder="tu@email.com" 
-            class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#FE2C55] focus:outline-none transition-colors" 
-            required
-          >
-        </div>
-
-        <div>
-          <label for="support-problem-type" class="block text-gray-700 font-semibold mb-2">
-            Tipo de Problema <span class="text-red-500">*</span>
-          </label>
-          <select 
-            id="support-problem-type" 
-            class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#FE2C55] focus:outline-none transition-colors bg-white"
-            required
-          >
-            <option value="">Selecciona el tipo de problema</option>
-            <option value="technical">Problema Técnico</option>
-            <option value="account">Problema con la Cuenta</option>
-            <option value="payment">Problema de Pago</option>
-            <option value="content">Problema con Contenido</option>
-            <option value="feature">Solicitud de Función</option>
-            <option value="report">Reportar Abuso</option>
-            <option value="other">Otro</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="support-description" class="block text-gray-700 font-semibold mb-2">
-            Descripción del Problema <span class="text-red-500">*</span>
-            <span class="text-xs text-gray-500 font-normal">(mínimo 100 caracteres)</span>
-          </label>
-          <textarea 
-            id="support-description" 
-            placeholder="Describe detalladamente tu problema o consulta. Cuantos más detalles proporciones, mejor podremos ayudarte..." 
-            class="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#FE2C55] focus:outline-none transition-colors resize-none" 
-            rows="6"
-            minlength="100"
-            required
-          ></textarea>
-          <div class="flex justify-between items-center mt-2">
-            <span id="char-count" class="text-sm text-gray-500">0 / 100 caracteres mínimo</span>
-          </div>
-        </div>
-
-        <button 
-          id="btn-send-support" 
-          type="submit" 
-          class="w-full bg-[#FE2C55] text-white font-bold py-4 rounded-xl hover:bg-[#e02849] transition-colors shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] duration-200"
-        >
-          <i class="fas fa-paper-plane mr-2"></i>
-          Enviar Solicitud de Soporte
-        </button>
-      </form>
-    </div>
-
-    <div id="support-success-message" class="bg-white h-full min-h-screen p-8 hidden">
-      <div class="text-center">
-        <div class="mb-6">
-          <div class="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-            <i class="fas fa-check-circle text-green-500 text-5xl"></i>
-          </div>
-        </div>
-        
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Solicitud Enviada!</h2>
-        
-        <p class="text-gray-600 mb-6 text-lg">
-          Hemos recibido tu mensaje y nos pondremos en contacto contigo pronto.
-        </p>
-        
-        <p class="text-gray-500 mb-8">
-          Nuestro equipo de soporte revisará tu solicitud y te responderá lo antes posible.
-        </p>
-
-        <button 
-          onclick="closeSupportModal()" 
-          class="inline-block bg-[#FE2C55] text-white font-bold py-3 px-8 rounded-xl hover:bg-[#e02849] transition-colors shadow-lg"
-        >
-          <i class="fas fa-arrow-left mr-2"></i>
-          Volver
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- SPINNER DE CERRAR SESIÓN -->
 <div id="signout-spinner" class="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50 hidden">
@@ -2980,7 +2874,7 @@ document.addEventListener('DOMContentLoaded', function() {
           Los efectos y marcos están disponibles en tu perfil
         </p>
       </div>
-      <button onclick="openSupportModal()" class="mt-4 w-full bg-[#FE2C55] text-white p-3 rounded-lg flex items-center justify-center">
+      <button onclick="window.location.href='support.html'" class="mt-4 w-full bg-[#FE2C55] text-white p-3 rounded-lg flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
         </svg>
@@ -3243,7 +3137,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="w-full mt-6 space-y-3">
             
             
-            <button onclick="openSupportModal()" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center">
+            <button onclick="window.location.href='support.html'" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
               </svg>
@@ -6479,94 +6373,7 @@ async function likeNote(noteId) {
     }, 3000);
   }
   
-  /*********************** SOPORTE **************************/
-  function openSupportModal() {
-    const supportModal = document.getElementById('support-modal');
-    supportModal.style.zIndex = 9999;
-    supportModal.classList.remove('hidden');
-  }
-
-  function closeSupportModal() {
-    document.getElementById('support-modal').classList.add('hidden');
-    document.getElementById('support-form-container').classList.remove('hidden');
-    document.getElementById('support-success-message').classList.add('hidden');
-    document.getElementById('support-form').reset();
-    updateCharCount();
-  }
-
-  function updateCharCount() {
-    const description = document.getElementById('support-description');
-    const charCount = document.getElementById('char-count');
-    const currentLength = description.value.length;
-    
-    charCount.textContent = `${currentLength} / 100 caracteres mínimo`;
-    
-    if (currentLength < 100) {
-      charCount.classList.add('text-red-500');
-      charCount.classList.remove('text-green-600');
-    } else {
-      charCount.classList.add('text-green-600');
-      charCount.classList.remove('text-red-500');
-    }
-  }
-
-  document.getElementById('support-description').addEventListener('input', updateCharCount);
-
-  document.getElementById('support-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('support-email').value;
-    const problemType = document.getElementById('support-problem-type').value;
-    const description = document.getElementById('support-description').value;
-    
-    if (description.length < 100) {
-      alert("Por favor, proporciona una descripción de al menos 100 caracteres.");
-      return;
-    }
-    
-    const user = firebase.auth().currentUser;
-    
-    const btn = document.getElementById('btn-send-support');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Enviando...';
-    
-    try {
-      const response = await fetch('/.netlify/functions/send-support-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          problemType,
-          description,
-          userId: user ? user.uid : null
-        })
-      });
-
-      const result = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(result.error || 'Error al enviar solicitud');
-      }
-      
-      document.getElementById('support-form-container').classList.add('hidden');
-      document.getElementById('support-success-message').classList.remove('hidden');
-      
-      setTimeout(() => {
-        closeSupportModal();
-      }, 3000);
-      
-      document.getElementById('support-form').reset();
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Enviar Solicitud de Soporte';
-    } catch (error) {
-      console.error("Error al enviar solicitud de soporte:", error);
-      alert("❌ Hubo un error al enviar tu solicitud. Por favor, intenta nuevamente.");
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Enviar Solicitud de Soporte';
-    }
-  });
+  
   /*********************** NAVEGACIÓN Y MODALES **************************/
   function openStoryDetail(story) {
     const user = firebase.auth().currentUser;
