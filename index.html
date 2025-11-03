@@ -4272,79 +4272,6 @@ function saveNote() {
   <div class="gift-container">
     <h2 class="text-xl font-bold mb-4 text-center text-white">Enviar Regalo</h2>
     <div class="gift-grid">
-
-async function loadPhotos() {
-  const photosFeed = document.getElementById('photos-feed');
-  if (!photosFeed) return;
-  
-  const photosContainer = photosFeed.querySelector('.grid');
-  if (!photosContainer) return;
-  
-  photosContainer.innerHTML = '';
-
-  try {
-    const response = await fetch('/.netlify/functions/get-notes?limit=50');
-    const result = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(result.error || 'Error al cargar fotos');
-    }
-
-    const photos = (result.notes || []).filter(note => note.imageUrl);
-    
-    photos.forEach(photo => {
-      const photoCard = document.createElement('div');
-      photoCard.className = 'relative aspect-square cursor-pointer';
-      photoCard.innerHTML = `
-        <img src="${photo.imageUrl || ''}" alt="" class="w-full h-full object-cover">
-        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-          <div class="flex items-center">
-            <img src="${photo.authorImage || 'https://via.placeholder.com/150'}" alt="${photo.authorName || 'Usuario'}" class="w-6 h-6 rounded-full mr-2">
-            <span class="text-white text-sm truncate">${photo.authorName || 'Usuario'}</span>
-          </div>
-        </div>
-      `;
-      photoCard.onclick = () => {
-        openPhotoDetail(photo);
-      };
-      photosContainer.appendChild(photoCard);
-    });
-  } catch (error) {
-    console.error('Error loading photos:', error);
-    photosContainer.innerHTML = '<div class="col-span-2 text-center text-gray-500 py-8">Error al cargar fotos</div>';
-  }
-}
-
-function openPhotoDetail(photo) {
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
-  modal.innerHTML = `
-    <div class="max-w-2xl w-full bg-white rounded-xl overflow-hidden">
-      <img src="${photo.imageUrl || ''}" alt="" class="w-full h-auto">
-      <div class="p-4">
-        <div class="flex items-center mb-4">
-          <img src="${photo.authorImage || 'https://via.placeholder.com/150'}" alt="${photo.authorName || 'Usuario'}" class="w-8 h-8 rounded-full mr-2">
-          <span class="font-bold">${photo.authorName || 'Usuario'}</span>
-        </div>
-        ${photo.content ? `<p class="text-gray-700">${photo.content}</p>` : ''}
-        <div class="mt-4 flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-            <button onclick="likePhoto('${photo.id || ''}')" class="flex items-center text-gray-600">
-              <i class="fas fa-heart mr-1"></i>
-              <span>${photo.likes || 0}</span>
-            </button>
-          </div>
-          <span class="text-gray-500 text-sm">${new Date(photo.timestamp || Date.now()).toLocaleDateString()}</span>
-        </div>
-      </div>
-    </div>
-    <button onclick="this.parentElement.remove()" class="absolute top-4 right-4 text-white text-xl">
-      <i class="fas fa-times"></i>
-    </button>
-  `;
-  document.body.appendChild(modal);
-}
-
       <!-- Ítems originales (algunos se muestran como GIF y otros en video para un look moderno) -->
       <div class="gift-item bg-black/20 backdrop-blur-sm rounded-lg" onclick="sendGift('cupido')">
         <img src="https://i.pinimg.com/originals/2d/f8/97/2df897364f655a0b14070a9e2f95d602.gif" alt="Cupido">
@@ -5859,6 +5786,78 @@ async function likeNote(noteId) {
   // Todos los usuarios están autorizados para transmitir en vivo
   const authorizedEmails = [];
   /*********************** FUNCIONES ADICIONALES **************************/
+  async function loadPhotos() {
+    const photosFeed = document.getElementById('photos-feed');
+    if (!photosFeed) return;
+    
+    const photosContainer = photosFeed.querySelector('.grid');
+    if (!photosContainer) return;
+    
+    photosContainer.innerHTML = '';
+
+    try {
+      const response = await fetch('/.netlify/functions/get-notes?limit=50');
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Error al cargar fotos');
+      }
+
+      const photos = (result.notes || []).filter(note => note.imageUrl);
+      
+      photos.forEach(photo => {
+        const photoCard = document.createElement('div');
+        photoCard.className = 'relative aspect-square cursor-pointer';
+        photoCard.innerHTML = `
+          <img src="${photo.imageUrl || ''}" alt="" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
+            <div class="flex items-center">
+              <img src="${photo.authorImage || 'https://via.placeholder.com/150'}" alt="${photo.authorName || 'Usuario'}" class="w-6 h-6 rounded-full mr-2">
+              <span class="text-white text-sm truncate">${photo.authorName || 'Usuario'}</span>
+            </div>
+          </div>
+        `;
+        photoCard.onclick = () => {
+          openPhotoDetail(photo);
+        };
+        photosContainer.appendChild(photoCard);
+      });
+    } catch (error) {
+      console.error('Error loading photos:', error);
+      photosContainer.innerHTML = '<div class="col-span-2 text-center text-gray-500 py-8">Error al cargar fotos</div>';
+    }
+  }
+
+  function openPhotoDetail(photo) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4';
+    modal.innerHTML = `
+      <div class="max-w-2xl w-full bg-white rounded-xl overflow-hidden">
+        <img src="${photo.imageUrl || ''}" alt="" class="w-full h-auto">
+        <div class="p-4">
+          <div class="flex items-center mb-4">
+            <img src="${photo.authorImage || 'https://via.placeholder.com/150'}" alt="${photo.authorName || 'Usuario'}" class="w-8 h-8 rounded-full mr-2">
+            <span class="font-bold">${photo.authorName || 'Usuario'}</span>
+          </div>
+          ${photo.content ? `<p class="text-gray-700">${photo.content}</p>` : ''}
+          <div class="mt-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <button onclick="likePhoto('${photo.id || ''}')" class="flex items-center text-gray-600">
+                <i class="fas fa-heart mr-1"></i>
+                <span>${photo.likes || 0}</span>
+              </button>
+            </div>
+            <span class="text-gray-500 text-sm">${new Date(photo.timestamp || Date.now()).toLocaleDateString()}</span>
+          </div>
+        </div>
+      </div>
+      <button onclick="this.parentElement.remove()" class="absolute top-4 right-4 text-white text-xl">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
+    document.body.appendChild(modal);
+  }
+
   function contienePalabrasOfensivas(texto) {
     // Lista de 20 palabras ofensivas en español (ejemplo; ajústala según tus necesidades)
     const listaOfensiva = [
@@ -6277,6 +6276,20 @@ async function likeNote(noteId) {
   }
 
   /*********************** AUTENTICACIÓN **************************/
+  function resetPassword() {
+    const email = prompt('Ingresa tu correo electrónico para restablecer tu contraseña:');
+    if (email) {
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          alert('Se ha enviado un correo para restablecer tu contraseña. Por favor revisa tu bandeja de entrada.');
+        })
+        .catch(error => {
+          console.error('Error al enviar correo de restablecimiento:', error);
+          alert('Error: ' + error.message);
+        });
+    }
+  }
+
   toggleAuth.addEventListener('click', () => {
     isLogin = !isLogin;
     submitButton.textContent = isLogin ? 'Sign In' : 'Sign Up';
@@ -6794,42 +6807,38 @@ async function likeNote(noteId) {
       document.getElementById('search-loading').classList.remove('loading-active'); // Ocultar animación
     });
   });
-}else {
-    document.getElementById('search-authors-list').innerHTML = '';
-  }
 }
 
 document.getElementById('search-input').addEventListener('input', function() {
   document.getElementById('search-loading').classList.add('loading-active');
   performRealTimeSearch();
 });
+
 document.getElementById('category-filter').addEventListener('change', function() {
   document.getElementById('search-loading').classList.add('loading-active');
   performRealTimeSearch();
-});  async function performSearch(query) {
-    document.getElementById('search-loading').classList.add('loading-active');
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    const storiesSnapshot = await firebase.database().ref('stories').once('value');
-    let books = [];
-    storiesSnapshot.forEach(child => {
-      const story = child.val();
-      if (story.title && story.title.toLowerCase().includes(query)) books.push(story);
-    });
-    renderBooksCarousel(books);
-    
-    const usersSnapshot = await firebase.database().ref('users').once('value');
-    let authors = [];
-    usersSnapshot.forEach(child => {
-      const user = child.val();
-      if (user.username && user.username.toLowerCase().includes(query)) authors.push(user);
-    });
-    renderAuthorsList(authors);
-    document.getElementById('search-loading').classList.remove('loading-active');
-  }h(userData);
-      }
-    });
-    renderAuthorsList(authors);
-  }
+});
+
+async function performSearch(query) {
+  document.getElementById('search-loading').classList.add('loading-active');
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  const storiesSnapshot = await firebase.database().ref('stories').once('value');
+  let books = [];
+  storiesSnapshot.forEach(child => {
+    const story = child.val();
+    if (story.title && story.title.toLowerCase().includes(query)) books.push(story);
+  });
+  renderBooksCarousel(books);
+  
+  const usersSnapshot = await firebase.database().ref('users').once('value');
+  let authors = [];
+  usersSnapshot.forEach(child => {
+    const user = child.val();
+    if (user.username && user.username.toLowerCase().includes(query)) authors.push(user);
+  });
+  renderAuthorsList(authors);
+  document.getElementById('search-loading').classList.remove('loading-active');
+}
 
   function renderBooksCarousel(books) {
     const carousel = document.getElementById('search-books-carousel');
