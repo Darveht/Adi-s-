@@ -12,35 +12,38 @@
   <!-- Estilos personalizados si existen -->
   <link rel="stylesheet" href="stories.css">
   <style>
+    #support-page-container {
+      /* Contenedor principal para encapsular estilos */
+    }
     /* Estilo para el color principal de TikTok */
-    .tiktok-pink {
+    #support-page-container .tiktok-pink {
       background-color: #FE2C55;
     }
-    .tiktok-pink-text {
+    #support-page-container .tiktok-pink-text {
       color: #FE2C55;
     }
-    .tiktok-pink-border:focus-within {
+    #support-page-container .tiktok-pink-border:focus-within {
       border-color: #FE2C55;
     }
-    .tiktok-pink-ring:focus {
+    #support-page-container .tiktok-pink-ring:focus {
       --tw-ring-color: #FE2C55;
     }
     /* Estilo para las tarjetas de categoría */
-    .category-card {
+    #support-page-container .category-card {
       min-height: 150px; /* Altura mínima para simular las tarjetas grandes de TikTok */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-    .category-card:hover {
+    #support-page-container .category-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
   </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen" id="support-page-container">
 
   <!-- Header simple para navegación -->
   <header class="bg-white shadow-md">
