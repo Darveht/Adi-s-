@@ -418,8 +418,247 @@ body {
   margin: 20px 0;
 }
 
+/* Estilos para replicar la interfaz de TikTok Live (Inicio) */
+.live-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    font-family: sans-serif;
+    color: white;
+    overflow: hidden;
+}
 
-/* Estilo para las estrellas seleccionadas */
+/* Placeholder de Video (Simulación de fondo) */
+.live-video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://via.placeholder.com/1080x1920/000000/FFFFFF?text=LIVE+STREAM+PLACEHOLDER'); /* Fondo negro o imagen de ejemplo */
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.8); /* Oscurecer un poco para que la UI resalte */
+}
+
+/* Capa de Interfaz (Overlay) */
+.live-ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+/* --- SECCIÓN SUPERIOR --- */
+.ui-top-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.streamer-info {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    padding: 5px 10px 5px 5px;
+}
+
+.streamer-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: url('https://via.placeholder.com/30/FFFFFF/000000?text=A');
+    background-size: cover;
+    margin-right: 5px;
+}
+
+.streamer-details {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    margin-right: 10px;
+}
+
+.streamer-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.live-status {
+    font-size: 10px;
+    color: #f0f0f0;
+}
+
+.follow-button {
+    background-color: #FE2C55; /* Rojo TikTok */
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.viewer-count {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ui-top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.share-button, .close-button {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* --- SECCIÓN INFERIOR --- */
+.ui-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Área de Comentarios/Chat */
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 30vh; /* Limitar altura para simular el scroll */
+    overflow-y: auto; /* Permitir scroll para los comentarios */
+    padding-left: 10px;
+    /* Estilo de scrollbar invisible para simular la app */
+    scrollbar-width: none; /* Firefox */
+}
+.chat-area::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.comment-bubble {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    width: fit-content;
+    max-width: 70%;
+    font-size: 14px;
+    backdrop-filter: blur(5px); /* Efecto de desenfoque sutil */
+}
+
+.comment-user {
+    font-weight: bold;
+    color: #FE2C55; /* Color de usuario similar a TikTok */
+    margin-right: 5px;
+}
+
+.gift-comment {
+    background-color: rgba(254, 44, 85, 0.5); /* Un color más distintivo para regalos */
+}
+
+/* Barra de Acción (Input y Botones) */
+.action-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.input-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.comment-input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+.comment-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.send-button {
+    background-color: #FE2C55;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.gift-button, .like-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- ANIMACIÓN DE LIKES (Corazones Flotantes) --- */
+.like-animation-area {
+    position: absolute;
+    bottom: 60px; /* Encima de la barra de acción */
+    right: 10px;
+    width: 50px;
+    height: 200px;
+    pointer-events: none; /* Permite hacer clic a través */
+}
+
+/* Estilos para el icono de ojo (simulación de icono) */
+.icon-eye {
+    font-size: 14px;
+}
+/* Estilos para las estrellas seleccionadas */
 .star.selected {
   color: #FE2C55;
   transition: color 0.3s ease-in-out;
@@ -4322,7 +4561,457 @@ function saveNote() {
 
 <!-- MODAL DE VISUALIZACIÓN EN VIVO (Espectador) -->
 <div id="live-view-modal" class="fixed inset-0 z-50 hidden">
-  <div class="live-container bg-gradient-to-b from-[#171F30] to-[#273852]" id="liveContainer">
+  <!-- El diseño de TikTok Live se aplica directamente aquí -->
+  <div class="live-container" id="liveContainer">
+      <!-- 1. Capa de Video (Simulada) -->
+      <div class="live-video-placeholder">
+          <!-- Aquí iría el stream de video real -->
+          <video id="live-remoteVideo" autoplay playsinline class="w-full h-full object-cover" ondblclick="handleDoubleTap(event)"></video>
+      </div>
+
+      <!-- 2. Capa de Interfaz (UI) -->
+      <div class="live-ui-overlay">
+          <!-- Elementos de la Interfaz Superior Izquierda (Información del Streamer) -->
+          <div class="ui-top-left">
+              <div class="streamer-info">
+                  <div class="streamer-avatar"></div>
+                  <div class="streamer-details">
+                      <span class="streamer-name" id="streamerName">Broadcast Name</span>
+                      <span class="live-status">EN VIVO</span>
+                  </div>
+                  <button class="follow-button">Seguir</button>
+              </div>
+              <div class="viewer-count">
+                  <span class="icon-eye">👁️</span>
+                  <span class="count" id="viewerCountLive">0</span>
+              </div>
+          </div>
+
+          <!-- Elementos de la Interfaz Superior Derecha (Botón de Cerrar y Compartir) -->
+          <div class="ui-top-right">
+              <button class="share-button">📤</button>
+              <button class="close-button" onclick="closeLiveViewModal()">❌</button>
+          </div>
+
+          <!-- Elementos de la Interfaz Inferior (Chat y Acciones) -->
+          <div class="ui-bottom">
+              <!-- Área de Comentarios/Chat -->
+              <div class="chat-area" id="commentsContainerLive">
+                  <!-- Los comentarios se inyectarán aquí dinámicamente -->
+                  <div class="comment-bubble">
+                      <span class="comment-user">@Usuario1:</span>
+                      <span class="comment-text">¡Hola a todos!</span>
+                  </div>
+                  <div class="comment-bubble gift-comment">
+                      <span class="comment-user">@Usuario2:</span>
+                      <span class="comment-text">Ha enviado un 🎁 (Regalo)</span>
+                  </div>
+              </div>
+
+              <!-- Botones de Acción (Regalo, Comentario, Like) -->
+              <div class="action-bar">
+                  <div class="input-container">
+                      <input type="text" placeholder="Añade un comentario..." class="comment-input" id="live-comment-input">
+                      <button class="send-button" onclick="sendLiveComment()">➡️</button>
+                  </div>
+                  <button class="gift-button" id="gift-btn">🎁</button>
+                  <button class="like-button" id="heartButtonViewer" onclick="sendHeart()">❤️</button>
+              </div>
+          </div>
+
+          <!-- Animación de Likes (Corazones Flotantes) -->
+          <div class="like-animation-area" id="hearts-container">
+              <!-- Contenedor para corazones animados -->
+          </div>
+      </div>
+  </div>
+  <!-- Contenedor para la animación de regalos -->
+  <div id="gift-animation" class="fixed inset-0 z-50 flex items-end justify-center p-4 hidden"></div>
+  <!-- Mensaje de fin de transmisión -->
+  <div id="live-endedMessage" class="absolute inset-0 bg-black/80 flex items-center justify-center hidden">
+      <p class="text-white text-2xl font-bold">La transmisión ha finalizado.</p>
+  </div>
+</div>
+  <!-- El diseño de TikTok Live se aplica directamente aquí -->
+  <div class="live-container" id="liveContainer">
+      <!-- 1. Capa de Video (Simulada) -->
+      <div class="live-video-placeholder">
+          <!-- Aquí iría el stream de video real -->
+      </div>
+
+      <!-- 2. Capa de Interfaz (UI) -->
+      <div class="live-ui-overlay">
+          <!-- Elementos de la Interfaz Superior Izquierda (Información del Streamer) -->
+          <div class="ui-top-left">
+              <div class="streamer-info">
+                  <div class="streamer-avatar"></div>
+                  <div class="streamer-details">
+                      <span class="streamer-name" id="streamerName">Broadcast Name</span>
+                      <span class="live-status">EN VIVO</span>
+                  </div>
+                  <button class="follow-button">Seguir</button>
+              </div>
+              <div class="viewer-count">
+                  <span class="icon-eye">👁️</span>
+                  <span class="count" id="viewerCountLive">0</span>
+              </div>
+          </div>
+
+          <!-- Elementos de la Interfaz Superior Derecha (Botón de Cerrar y Compartir) -->
+          <div class="ui-top-right">
+              <button class="share-button">📤</button>
+              <button class="close-button" onclick="closeLiveViewModal()">❌</button>
+          </div>
+
+          <!-- Elementos de la Interfaz Inferior (Chat y Acciones) -->
+          <div class="ui-bottom">
+              <!-- Área de Comentarios/Chat -->
+              <div class="chat-area" id="commentsContainerLive">
+                  <!-- Los comentarios se inyectarán aquí dinámicamente -->
+                  <div class="comment-bubble">
+                      <span class="comment-user">@Usuario1:</span>
+                      <span class="comment-text">¡Hola a todos!</span>
+                  </div>
+                  <div class="comment-bubble gift-comment">
+                      <span class="comment-user">@Usuario2:</span>
+                      <span class="comment-text">Ha enviado un 🎁 (Regalo)</span>
+                  </div>
+              </div>
+
+              <!-- Botones de Acción (Regalo, Comentario, Like) -->
+              <div class="action-bar">
+                  <div class="input-container">
+                      <input type="text" placeholder="Añade un comentario..." class="comment-input" id="live-comment-input">
+                      <button class="send-button" onclick="sendLiveComment()">➡️</button>
+                  </div>
+                  <button class="gift-button" id="gift-btn">🎁</button>
+                  <button class="like-button" id="heartButtonViewer">❤️</button>
+              </div>
+          </div>
+
+          <!-- Animación de Likes (Corazones Flotantes) -->
+          <div class="like-animation-area" id="hearts-container">
+              <!-- Los corazones se agregarían aquí dinámicamente con JS/CSS -->
+          </div>
+      </div>
+  </div>
+  <!-- Contenedor para la animación de regalos -->
+  <div id="gift-animation" class="fixed inset-0 z-50 flex items-end justify-center p-4 hidden"></div>
+</div>
+<!-- FIN MODAL DE VISUALIZACIÓN EN VIVO (Espectador) -->
+  <!-- El diseño de TikTok Live se aplica directamente aquí -->
+  <div class="live-container" id="liveContainer">
+      <!-- 1. Capa de Video (Simulada) -->
+      <div class="live-video-placeholder">
+          <!-- Aquí iría el stream de video real -->
+      </div>
+
+      <!-- 2. Capa de Interfaz (UI) -->
+      <div class="live-ui-overlay">
+          <!-- Elementos de la Interfaz Superior Izquierda (Información del Streamer) -->
+          <div class="ui-top-left">
+              <div class="streamer-info">
+                  <div class="streamer-avatar"></div>
+                  <div class="streamer-details">
+                      <span class="streamer-name" id="streamerName">Broadcast Name</span>
+                      <span class="live-status">EN VIVO</span>
+                  </div>
+                  <button class="follow-button">Seguir</button>
+              </div>
+              <div class="viewer-count">
+                  <span class="icon-eye">👁️</span>
+                  <span class="count" id="viewerCountLive">0</span>
+              </div>
+          </div>
+
+          <!-- Elementos de la Interfaz Superior Derecha (Botón de Cerrar y Compartir) -->
+          <div class="ui-top-right">
+              <button class="share-button">📤</button>
+              <button class="close-button" onclick="closeLiveViewModal()">❌</button>
+          </div>
+
+          <!-- Elementos de la Interfaz Inferior (Chat y Acciones) -->
+          <div class="ui-bottom">
+              <!-- Área de Comentarios/Chat -->
+              <div class="chat-area" id="commentsContainerLive">
+                  <!-- Los comentarios se inyectarán aquí dinámicamente -->
+                  <div class="comment-bubble">
+                      <span class="comment-user">@Usuario1:</span>
+                      <span class="comment-text">¡Hola a todos!</span>
+                  </div>
+                  <div class="comment-bubble gift-comment">
+                      <span class="comment-user">@Usuario2:</span>
+                      <span class="comment-text">Ha enviado un 🎁 (Regalo)</span>
+                  </div>
+              </div>
+
+              <!-- Botones de Acción (Regalo, Comentario, Like) -->
+              <div class="action-bar">
+                  <div class="input-container">
+                      <input type="text" placeholder="Añade un comentario..." class="comment-input" id="live-comment-input">
+                      <button class="send-button" onclick="sendLiveComment()">➡️</button>
+                  </div>
+                  <button class="gift-button" id="gift-btn">🎁</button>
+                  <button class="like-button" id="heartButtonViewer">❤️</button>
+              </div>
+          </div>
+
+          <!-- Animación de Likes (Corazones Flotantes) -->
+          <div class="like-animation-area" id="hearts-container">
+              <!-- Los corazones se agregarían aquí dinámicamente con JS/CSS -->
+          </div>
+      </div>
+  </div>
+  <!-- Contenedor para la animación de regalos -->
+  <div id="gift-animation" class="fixed inset-0 z-50 flex items-end justify-center p-4 hidden"></div>
+</div>
+<!-- FIN MODAL DE VISUALIZACIÓN EN VIVO (Espectador) -->
+
+<!-- Estilos para replicar la interfaz de TikTok Live (Inicio) -->
+<style>
+  /* Contenedor Principal */
+  .live-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      font-family: sans-serif;
+      color: white;
+      overflow: hidden;
+  }
+
+  /* Placeholder de Video (Simulación de fondo) */
+  .live-video-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://via.placeholder.com/1080x1920/000000/FFFFFF?text=LIVE+STREAM+PLACEHOLDER'); /* Fondo negro o imagen de ejemplo */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.8); /* Oscurecer un poco para que la UI resalte */
+  }
+
+  /* Capa de Interfaz (Overlay) */
+  .live-ui-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      box-sizing: border-box;
+      z-index: 10;
+  }
+
+  /* --- SECCIÓN SUPERIOR --- */
+  .ui-top-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+
+  .streamer-info {
+      display: flex;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      padding: 5px 10px 5px 5px;
+  }
+
+  .streamer-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-image: url('https://via.placeholder.com/30/FFFFFF/000000?text=A');
+      background-size: cover;
+      margin-right: 5px;
+  }
+
+  .streamer-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      margin-right: 10px;
+  }
+
+  .streamer-name {
+      font-weight: bold;
+      font-size: 14px;
+  }
+
+  .live-status {
+      font-size: 10px;
+      color: #f0f0f0;
+  }
+
+  .follow-button {
+      background-color: #FE2C55; /* Rojo TikTok */
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+  }
+
+  .viewer-count {
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      border-radius: 15px;
+      padding: 5px 10px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+  }
+
+  .ui-top-right {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+  }
+
+  .share-button, .close-button {
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  }
+
+  /* --- SECCIÓN INFERIOR --- */
+  .ui-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+  }
+
+  /* Área de Comentarios/Chat */
+  .chat-area {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      max-height: 30vh; /* Limitar altura para simular el scroll */
+      overflow-y: auto; /* Permitir scroll para los comentarios */
+      padding-left: 10px;
+      /* Estilo de scrollbar invisible para simular la app */
+      scrollbar-width: none; /* Firefox */
+  }
+  .chat-area::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+  }
+
+  .comment-bubble {
+      background-color: rgba(0, 0, 0, 0.3);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      width: fit-content;
+      max-width: 70%;
+      font-size: 14px;
+      backdrop-filter: blur(5px); /* Efecto de desenfoque sutil */
+  }
+
+  .comment-user {
+      font-weight: bold;
+      color: #FE2C55; /* Color de usuario similar a TikTok */
+      margin-right: 5px;
+  }
+
+  .gift-comment {
+      background-color: rgba(254, 44, 85, 0.5); /* Un color más distintivo para regalos */
+  }
+
+  /* Barra de Acción (Input y Botones) */
+  .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px;
+  }
+
+  .input-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      padding: 5px;
+  }
+
+  .comment-input {
+      flex-grow: 1;
+      background: none;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      font-size: 14px;
+      outline: none;
+  }
+
+  .comment-input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+  }
+
+  .send-button {
+      background-color: #FE2C55;
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  }
+
+  .gift-button, .like-button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+  }
+
+  /* --- ANIMACIÓN DE LIKES (Corazones Flotantes) --- */
+  .like-animation-area {
+      position: absolute;
+      bottom: 60px; /* Encima de la barra de acción */
+      right: 10px;
+      width: 50px;
+      height: 200px;
+      pointer-events: none; /* Permite hacer clic a través */
+  }
+
+  /* Estilos para el icono de ojo (simulación de icono) */
+  .icon-eye {
+      font-size: 14px;
+  }
+</style>
+<!-- Estilos para replicar la interfaz de TikTok Live (Fin) -->
+  
     <!-- Top Bar -->
     <div class="top-bar bg-black/30 backdrop-blur-sm px-4 py-3">
       <div class="user-info">
