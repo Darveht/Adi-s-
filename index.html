@@ -154,248 +154,9 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
   <link rel="stylesheet" href="tiktok-loader.css">
 
-  <!-- Estilos para replicar la interfaz de TikTok Live (Inicio) -->
-  <style>
-    /* Contenedor Principal */
-    .live-container {
-        position: fixed; /* Usar fixed para que cubra toda la pantalla */
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #000;
-        font-family: sans-serif;
-        color: white;
-        overflow: hidden;
-        z-index: 9999; /* Asegurar que esté por encima de todo */
-    }
-
-    /* Placeholder de Video (Simulación de fondo) */
-    .live-video-placeholder {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('https://via.placeholder.com/1080x1920/000000/FFFFFF?text=LIVE+STREAM+PLACEHOLDER'); /* Fondo negro o imagen de ejemplo */
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.8); /* Oscurecer un poco para que la UI resalte */
-    }
-
-    /* Capa de Interfaz (Overlay) */
-    .live-ui-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 10px;
-        box-sizing: border-box;
-        z-index: 10;
-    }
-
-    /* --- SECCIÓN SUPERIOR --- */
-    .ui-top-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .streamer-info {
-        display: flex;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.4);
-        border-radius: 20px;
-        padding: 5px 10px 5px 5px;
-    }
-
-    .streamer-avatar {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-image: url('https://via.placeholder.com/30/FFFFFF/000000?text=A');
-        background-size: cover;
-        margin-right: 5px;
-    }
-
-    .streamer-details {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-        margin-right: 10px;
-    }
-
-    .streamer-name {
-        font-weight: bold;
-        font-size: 14px;
-    }
-
-    .live-status {
-        font-size: 10px;
-        color: #f0f0f0;
-    }
-
-    .follow-button {
-        background-color: #FE2C55; /* Rojo TikTok */
-        color: white;
-        border: none;
-        border-radius: 15px;
-        padding: 3px 8px;
-        font-size: 12px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .viewer-count {
-        background-color: rgba(0, 0, 0, 0.4);
-        color: white;
-        border-radius: 15px;
-        padding: 5px 10px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .ui-top-right {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .share-button, .close-button {
-        background-color: rgba(0, 0, 0, 0.4);
-        color: white;
-        border: none;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        font-size: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    /* --- SECCIÓN INFERIOR --- */
-    .ui-bottom {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-    }
-
-    /* Área de Comentarios/Chat */
-    .chat-area {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        max-height: 30vh; /* Limitar altura para simular el scroll */
-        overflow-y: hidden; /* Ocultar el scroll para el diseño estático */
-        padding-left: 10px;
-    }
-
-    .comment-bubble {
-        background-color: rgba(0, 0, 0, 0.3);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 15px;
-        width: fit-content;
-        max-width: 70%;
-        font-size: 14px;
-        backdrop-filter: blur(5px); /* Efecto de desenfoque sutil */
-    }
-
-    .comment-user {
-        font-weight: bold;
-        color: #FE2C55; /* Color de usuario similar a TikTok */
-        margin-right: 5px;
-    }
-
-    .gift-comment {
-        background-color: rgba(254, 44, 85, 0.5); /* Un color más distintivo para regalos */
-    }
-
-    /* Barra de Acción (Input y Botones) */
-    .action-bar {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 0 10px;
-    }
-
-    .input-container {
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 25px;
-        padding: 5px;
-    }
-
-    .comment-input {
-        flex-grow: 1;
-        background: none;
-        border: none;
-        color: white;
-        padding: 5px 10px;
-        font-size: 14px;
-        outline: none;
-    }
-
-    .comment-input::placeholder {
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .send-button {
-        background-color: #FE2C55;
-        color: white;
-        border: none;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        font-size: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    .gift-button, .like-button {
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        padding: 0;
-        margin: 0;
-    }
-
-    /* --- ANIMACIÓN DE LIKES (Corazones Flotantes) --- */
-    .like-animation-area {
-        position: absolute;
-        bottom: 60px; /* Encima de la barra de acción */
-        right: 10px;
-        width: 50px;
-        height: 200px;
-        pointer-events: none; /* Permite hacer clic a través */
-    }
-
-    /* Estilos para el icono de ojo (simulación de icono) */
-    .icon-eye {
-        font-size: 14px;
-    }
-  </style>
-  <!-- Estilos para replicar la interfaz de TikTok Live (Fin) -->
+  
+  
+  
   <style>
     /* ESTILOS BASE ADAPTADOS */
 body {
@@ -4767,7 +4528,7 @@ function saveNote() {
 </div>
 <!-- FIN MODAL DE VISUALIZACIÓN EN VIVO (Espectador) -->
 
-<!-- Estilos para replicar la interfaz de TikTok Live (Inicio) -->
+
 <style>
   /* Contenedor Principal */
   .live-container {
@@ -5010,7 +4771,7 @@ function saveNote() {
       font-size: 14px;
   }
 </style>
-<!-- Estilos para replicar la interfaz de TikTok Live (Fin) -->
+
   
     <!-- Top Bar -->
     <div class="top-bar bg-black/30 backdrop-blur-sm px-4 py-3">
@@ -8263,9 +8024,27 @@ async function performSearch(query) {
   function closeAuthorProfile() {
     document.getElementById('author-profile-modal').style.display = "none";
     if (document.getElementById('search-view').classList.contains('hidden')) {
-      document.getElementById('story-detail-modal').classList.remove('hidden');
+      document.getElementById('bottom-nav').classList.remove('hidden');
     }
   }
+
+  // --- FUNCIONES DE BLOQUEO DE PANTALLA (ERROR 503) ---
+  function activateBlocker() {
+    const blocker = document.getElementById('error-503-blocker');
+    if (blocker) {
+      blocker.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Evitar scroll en el fondo
+    }
+  }
+
+  function deactivateBlocker() {
+    const blocker = document.getElementById('error-503-blocker');
+    if (blocker) {
+      blocker.style.display = 'none';
+      document.body.style.overflow = ''; // Restaurar scroll
+    }
+  }
+  // -----------------------------------------------------
 
   function closeBlockedErrorModal() {
     document.getElementById('blocked-error-modal').style.display = "none";
@@ -10470,6 +10249,29 @@ async function performSearch(query) {
           const fileType = getFileType(message.fileName);
           messageContent = `
            <body class="bg-gray-100">
+  <!-- MODAL DE BLOQUEO DE PANTALLA COMPLETA (ERROR 503) -->
+  <div id="error-503-blocker" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    color: black;
+    display: none; /* Por defecto oculto */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 99999;
+    font-family: sans-serif;
+  ">
+    <h1 style="font-size: 4rem; font-weight: bold; margin-bottom: 1rem;">Error 503</h1>
+    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">Service Unavailable</p>
+    <p style="font-size: 1.2rem;">The server is temporarily unable to handle the request.</p>
+    <p style="font-size: 1.2rem;">Please try again later.</p>
+  </div>
+  <!-- FIN MODAL DE BLOQUEO -->
   <!-- SECCIÓN DE TRANSMISIÓN EN VIVO (LIVE) - ESTILO TIKTOK -->
   <!-- Por defecto, esta sección está oculta. Deberás usar JavaScript para mostrarla al hacer clic en el icono de transmisión. -->
   <div id="tiktok-live-section" class="live-container" style="display: none;">
